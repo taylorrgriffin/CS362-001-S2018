@@ -10,11 +10,12 @@ import java.util.LinkedList;
 import java.util.GregorianCalendar;
 
 public class CalDayTest{
-  // test default constructor
+  // test default constructor and null iterator
   @Test(timeout = 4000)
   public void test00()  throws Throwable  {
     CalDay calDay0 = new CalDay();
     assertFalse(calDay0.isValid());
+    assertEquals(null,calDay0.iterator());
   }
   // test constructor given 1 argument
   @Test(timeout = 4000)
@@ -186,7 +187,7 @@ public class CalDayTest{
   public void test11()  throws Throwable  {
     GregorianCalendar gregDay11 = new GregorianCalendar(10,15,1998);
     CalDay calDay11 = new CalDay(gregDay11);
-    // initialize appointments
+    // initialize appointment
     int startHour = -10;
     int startMinute = 65;
     int startDay = 100;
@@ -195,11 +196,31 @@ public class CalDayTest{
     String title = "Birthday Party";
     String description = "This is my birthday party";
     String emailAddress = "xyz@gmail.com";
-    // create and validate appointments
+    // create and validate appointment
     Appt appt11 = new Appt(startHour, startMinute, startDay, startMonth, startYear, title, description, emailAddress);
     appt11.setValid();
     calDay11.addAppt(appt11);
     assertEquals("10/15/1998",calDay11.toString());
+  }
+  // test getFullInfomrationApp with appointment without time set
+  @Test(timeout = 4000)
+  public void test12()  throws Throwable  {
+    GregorianCalendar gregDay12 = new GregorianCalendar(04,04,2001);
+    CalDay calDay12 = new CalDay(gregDay12);
+    // initialize appointment
+    int startHour = -2;
+    int startMinute = 1;
+    int startDay = 4;
+    int startMonth = 4;
+    int startYear = 2000;
+    String title = "Birthday Party";
+    String description = "This is my birthday party";
+    String emailAddress = "xyz@gmail.com";
+    // create and validate appointment
+    Appt appt12 = new Appt(startHour, startMinute, startDay, startMonth, startYear, title, description, emailAddress);
+    appt12.setValid();
+    calDay12.addAppt(appt12);
+    assertEquals("04/04/2001",calDay12.getFullInfomrationApp(calDay12));
   }
 
 }
