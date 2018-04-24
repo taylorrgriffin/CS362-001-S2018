@@ -4,6 +4,11 @@
 
 package calendar;
 
+import java.util.*;
+import java.io.*;
+
+import javax.xml.*;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 import calendar.Appt;
@@ -40,6 +45,9 @@ public class DataHandlerTest{
     // create DataHandler
     DataHandler dataHandler2;
 		dataHandler2 = new DataHandler("testFileName.xml",false);
+    Appt appt2 = new Appt(1,1,1,1,1,"title","desc","email");
+    appt2.setValid();
+    assertTrue(dataHandler2.saveAppt(appt2));
   }
   @Test(timeout = 4000)
   public void test04()  throws Throwable  {
@@ -77,6 +85,7 @@ public class DataHandlerTest{
     GregorianCalendar day4_5 = new GregorianCalendar(5, 5, 2015);
     // test saving valid appointment
     assertTrue(dataHandler4.saveAppt(appt4_5));
+
     // test deleting valid appointment
     assertTrue(dataHandler4.deleteAppt(appt4_5));
     // test getApptRange (second test will fail)
@@ -91,9 +100,10 @@ public class DataHandlerTest{
 		dataHandler5 = new DataHandler("testFileName.xml",false);
     // create invalid appointment
     Appt appt5 = new Appt(100, 100, 100, 100, 0, null, null, null);
+    appt5.setValid();
     // test deleting appointment
     assertFalse(dataHandler5.deleteAppt(appt5));
-    // test saving appointment (will fail)
+    // test saving appointment
     assertFalse(dataHandler5.saveAppt(appt5));
   }
   // test getApptOccurences with recurring appointments
@@ -109,13 +119,55 @@ public class DataHandlerTest{
     appt6.setRecurrence(recurDays, 1, 1, 2);
     // set first and last days
     GregorianCalendar firstDay = new GregorianCalendar(1,1,1);
-    GregorianCalendar lastDay = new GregorianCalendar(2,1,1);
+    GregorianCalendar lastDay = new GregorianCalendar(1,2,1);
     // add it to appt linked list
     LinkedList<Appt> apptList6 = new LinkedList<Appt>();
     apptList6.add(appt6);
     // test recurring event with getApptOccurences
     assertEquals(apptList6, dataHandler6.getApptRange(firstDay, lastDay));
   }
+  //test getApptRange where lastday is before firstday
+  @Test(timeout = 4000)
+  public void test07()  throws Throwable  {
+    // create DataHandler
+    DataHandler dataHandler7 = new DataHandler();
+    // set first and last days (last before first)
+    GregorianCalendar firstDay = new GregorianCalendar(1,2,1);
+    GregorianCalendar lastDay = new GregorianCalendar(1,1,1);
+    // test getApptRange where last is before first
+    try {
+		   dataHandler7.getApptRange(firstDay,lastDay);
+		}  catch(DateOutOfRangeException e) {}
+  }
+  // hit "while(iter.hasNext())" branch of getApptRange
+  @Test(timeout = 4000)
+  public void test08()  throws Throwable  {
+    // create DataHandler
+    DataHandler dataHandler8 = new DataHandler();
+    // create recurring event
+    Appt appt8 = new Appt(13, 30, 10, 5, 2018, "test appt", "this is a test appointment", "test@email.net");
+    // set it to recur weekly
+    int[] recurDays = {1,2};
+    appt8.setValid();
+    appt8.setRecurrence(recurDays, 1, 1, 2);
+    GregorianCalendar firstDay = new GregorianCalendar(1,1,1);
+    GregorianCalendar lastDay = new GregorianCalendar(1,1,2050);
+    assertNotSame(appt8, dataHandler8.getApptRange(firstDay, lastDay));
+  }
+
+
+
+  //test getApptRange where lastday is before firstday
+  // @Test(timeout = 4000)
+  // public void test08()  throws IOException  {
+  //   // create DataHandler
+  //   DataHandler dataHandler8;
+  //   try {
+  //     dataHandler8 = new DataHandler("filename.xml",true);
+	// 	  throw new IOException("throwing exception (test 08)");
+	// 	}  catch(DateOutOfRangeException e) {}
+  // }
+
   // @Test(timeout = 4000)
   // public void test05()  throws Throwable  {
   // // create dataHandler
