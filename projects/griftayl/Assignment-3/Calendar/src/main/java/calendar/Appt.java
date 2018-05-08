@@ -171,7 +171,7 @@ public class Appt{
 			this.valid = false;
 		else if (startHour < 0 || startHour > 23)
 			this.valid = false;
-		else if (startMinute < 0 || startMinute > 50)
+		else if (startMinute < 0 || startMinute > 59)
 			this.valid = false;
 		else if (startYear <= 0)
 			this.valid = false;
@@ -188,7 +188,7 @@ public class Appt{
 
     /** Sets startHour */
     public void setStartHour(int startHour) {
-    	this.startHour = startHour + 1;
+    	this.startHour = startHour;
     }
 
     /** Sets startHour */
@@ -213,7 +213,7 @@ public class Appt{
 
     /** Sets title */
     public void setTitle(String title) {
-        if (title != null)
+        if (title == null)
             this.title = "";
         else
             this.title = title;

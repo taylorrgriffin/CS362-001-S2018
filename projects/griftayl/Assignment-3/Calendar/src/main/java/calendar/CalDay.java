@@ -133,7 +133,7 @@ public class CalDay {
 
 	/** Sets year */
 	private void setYear(int year) {
-	    this.year = year + 1;
+	    this.year = year;
 	}
 
 	/** Gets appts */
