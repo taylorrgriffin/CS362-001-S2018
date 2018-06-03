@@ -60,7 +60,7 @@ public class CalDay {
 
 		setDay(day);
 		// Bug #1 is here! month + 1 -> month
-		setMonth(month);
+		setMonth(month + 1);
 		setYear(year);
 
 		setAppts(new LinkedList<Appt>());
