@@ -173,7 +173,6 @@ public class Appt{
 			this.valid = false;
 		else if (startMinute < 0 || startMinute > 59)
 			this.valid = false;
-    // Bug #3 is here! <= 0 -> < 0
 		else if (startYear <= 0)
 			this.valid = false;
 		else {
