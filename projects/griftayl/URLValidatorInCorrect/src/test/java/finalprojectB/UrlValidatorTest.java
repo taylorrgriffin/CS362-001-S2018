@@ -1,50 +1,37 @@
-
 package finalprojectB;
-
 import junit.framework.TestCase;
-
-//You can use this as a skeleton for your 3 different test approach
-//It is an optional to use this file, you can generate your own test file(s) to test the target function!
-// Again, it is up to you to use this file or not!
-
-
-
-
 
 public class UrlValidatorTest extends TestCase {
 
+  public UrlValidatorTest(String testName) {
+    super(testName);
+  }
 
-   public UrlValidatorTest(String testName) {
-      super(testName);
-   }
+  public void testManualTest() {
+    // manual testing
+    UrlValidator urlValidator = new UrlValidator();
+    System.out.println("");
+    System.out.println("=====Manual Tests=====");
+    System.out.println("");
+    System.out.print("testing: google,\t \t \tvalid: ");
+    System.out.println(urlValidator.isValid("google"));
+    System.out.print("testing: google.net,\t \t \tvalid: ");
+    System.out.println(urlValidator.isValid("google.net"));
+    System.out.print("testing: www.google.com,\t \tvalid: ");
+    System.out.println(urlValidator.isValid("www.google.com"));
+    System.out.print("testing: https://www.google.com/,\tvalid: ");
+    System.out.println(urlValidator.isValid("https://www.google.com/"));
+    System.out.println("");
+  }
+  public void testYourFirstPartition() {
+  // first partition testing
+  }
 
-   
-   
-   public void testManualTest()
-   {
-//You can use this function to implement your manual testing	   
-	   
-   }
-   
-   
-   public void testYourFirstPartition()
-   {
-	 //You can use this function to implement your First Partition testing	   
-
-   }
-   
-   public void testYourSecondPartition(){
-		 //You can use this function to implement your Second Partition testing	   
-
-   }
-   //You need to create more test cases for your Partitions if you need to 
-   
-   public void testIsValid()
-   {
-	   //You can use this function for programming based testing
-
-   }
-   
-
-
+  public void testYourSecondPartition(){
+  // second partition testing
+  }
+  //You can create more test cases for your Partitions if you need to
+  public void testIsValid() {
+	// programming based testing
+  }
 }
