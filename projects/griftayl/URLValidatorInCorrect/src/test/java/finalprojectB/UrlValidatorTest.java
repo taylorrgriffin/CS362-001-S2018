@@ -31,7 +31,7 @@ public class UrlValidatorTest extends TestCase {
     // first partition testing (valid)
     UrlValidator urlValidator = new UrlValidator(null,null,1 << 1 + 1 << 2);
     System.out.println("");
-    System.out.println("=====First Domain Partion (invalid)=====");
+    System.out.println("=====First Domain Partion (invalid URLs)=====");
     System.out.println("");
     assertFalse(urlValidator.isValid(":"));
     assertFalse(urlValidator.isValid("://"));
@@ -62,17 +62,55 @@ public class UrlValidatorTest extends TestCase {
     assertFalse(urlValidator.isValid("https://goo..nat/test3.=."));
     assertFalse(urlValidator.isValid("http://goo../test4..=?"));
     assertFalse(urlValidator.isValid("ftp://goo./test5:..?:."));
-
+    //
     System.out.println("(If we see no failures here then we're good to go)");
     System.out.println("");
   }
 
   public void testYourSecondPartition() {
     // second partition testing (invalid)
-    // UrlValidator urlValidator = new UrlValidator(null,null,1 << 1 + 1 << 2);
-    // System.out.println("");
-    // System.out.println("=====Second Domain Partion (valid)=====");
-    // System.out.println("");
+    UrlValidator urlValidator = new UrlValidator(null,null,1 << 1 + 1 << 2);
+    System.out.println("");
+    System.out.println("=====Second Domain Partion (valid URLs)=====");
+    System.out.println("");
+    System.out.print("Testing https://google.com,\t\t\tvalid: ");
+    System.out.println(urlValidator.isValid("https://google.com"));
+    System.out.print("Testing https://google.com/,\t\t\tvalid: ");
+    System.out.println(urlValidator.isValid("https://google.com/"));
+    System.out.print("Testing https://google.com/test1/,\t\tvalid: ");
+    System.out.println(urlValidator.isValid("https://google.com/test1/"));
+    System.out.print("Testing https://google.com/test1+layout=true/,\tvalid: ");
+    System.out.println(urlValidator.isValid("https://google.com/test1+layout=true/"));
+    // assertTrue(urlValidator.isValid("https://google.com"));
+    // assertTrue(urlValidator.isValid("https://google.com/"));
+    // assertTrue(urlValidator.isValid("https://google.com/test1"));
+    // assertTrue(urlValidator.isValid("https://google.com/test1+layout=true"));
+    //
+    System.out.print("Testing http://google.com,\t\t\tvalid: ");
+    System.out.println(urlValidator.isValid("http://google.com"));
+    System.out.print("Testing http://google.com/,\t\t\tvalid: ");
+    System.out.println(urlValidator.isValid("http://google.com/"));
+    System.out.print("Testing http://google.com/test1/,\t\tvalid: ");
+    System.out.println(urlValidator.isValid("http://google.com/test1/"));
+    System.out.print("Testing http://google.com/test1+layout=true/,\tvalid: ");
+    System.out.println(urlValidator.isValid("http://google.com/test1+layout=true/"));
+    // assertTrue(urlValidator.isValid("http://google.com"));
+    // assertTrue(urlValidator.isValid("http://google.com/"));
+    // assertTrue(urlValidator.isValid("http://google.com/test1"));
+    // assertTrue(urlValidator.isValid("http://google.com/test1+layout=true"));
+    //
+    System.out.print("Testing ftp://google.com,\t\t\tvalid: ");
+    System.out.println(urlValidator.isValid("ftp://google.com"));
+    System.out.print("Testing ftp://google.com/,\t\t\tvalid: ");
+    System.out.println(urlValidator.isValid("ftp://google.com/"));
+    System.out.print("Testing ftp://google.com/test1/,\t\tvalid: ");
+    System.out.println(urlValidator.isValid("ftp://google.com/test1/"));
+    System.out.print("Testing ftp://google.com/test1+layout=true/,\tvalid: ");
+    System.out.println(urlValidator.isValid("ftp://google.com/test1+layout=true/"));
+    // assertTrue(urlValidator.isValid("ftp://google.com"));
+    // assertTrue(urlValidator.isValid("ftp://google.com/"));
+    // assertTrue(urlValidator.isValid("ftp://google.com/test1"));
+    // assertTrue(urlValidator.isValid("ftp://google.com/test1+layout=true"));
   }
 
   // public static String RandomSelectScheme(Random random) {
@@ -102,5 +140,8 @@ public class UrlValidatorTest extends TestCase {
     for (i=0;i<100;i++) {
       //nothing yet
     }
+    System.out.println("");
+    System.out.println("=====Done Testing=====");
+    System.out.println("");
   }
 }
