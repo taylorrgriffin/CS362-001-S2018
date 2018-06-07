@@ -1,5 +1,8 @@
 package finalprojectB;
 import junit.framework.TestCase;
+import org.junit.Test;
+import java.util.Random;
+import static org.junit.Assert.*;
 
 public class UrlValidatorTest extends TestCase {
 
@@ -9,7 +12,8 @@ public class UrlValidatorTest extends TestCase {
 
   public void testManualTest() {
     // manual testing
-    UrlValidator urlValidator = new UrlValidator();
+    UrlValidator urlValidator = new UrlValidator(null,null,1 << 1 + 1 << 2);
+    urlValidator.getInstance();
     System.out.println("");
     System.out.println("=====Manual Tests=====");
     System.out.println("");
@@ -24,14 +28,79 @@ public class UrlValidatorTest extends TestCase {
     System.out.println("");
   }
   public void testYourFirstPartition() {
-  // first partition testing
+    // first partition testing (valid)
+    UrlValidator urlValidator = new UrlValidator(null,null,1 << 1 + 1 << 2);
+    System.out.println("");
+    System.out.println("=====First Domain Partion (invalid)=====");
+    System.out.println("");
+    assertFalse(urlValidator.isValid(":"));
+    assertFalse(urlValidator.isValid("://"));
+    assertFalse(urlValidator.isValid("https://"));
+    assertFalse(urlValidator.isValid("http://"));
+    assertFalse(urlValidator.isValid("ftp://"));
+    //
+    assertFalse(urlValidator.isValid(":goo"));
+    assertFalse(urlValidator.isValid("://goo"));
+    assertFalse(urlValidator.isValid("https://goo"));
+    assertFalse(urlValidator.isValid("http://goo"));
+    assertFalse(urlValidator.isValid("ftp://goo"));
+    //
+    assertFalse(urlValidator.isValid(":goo.not:"));
+    assertFalse(urlValidator.isValid("://goo.net."));
+    assertFalse(urlValidator.isValid("https://goo..nat"));
+    assertFalse(urlValidator.isValid("http://goo.."));
+    assertFalse(urlValidator.isValid("ftp://goo."));
+    //
+    assertFalse(urlValidator.isValid(":goo.not:/test1"));
+    assertFalse(urlValidator.isValid("://goo.net./test2"));
+    assertFalse(urlValidator.isValid("https://goo..nat/test3."));
+    assertFalse(urlValidator.isValid("http://goo../test4"));
+    assertFalse(urlValidator.isValid("ftp://goo./test5:."));
+    //
+    assertFalse(urlValidator.isValid(":goo.not:/test1=?layout:...."));
+    assertFalse(urlValidator.isValid("://goo.net./test2=:."));
+    assertFalse(urlValidator.isValid("https://goo..nat/test3.=."));
+    assertFalse(urlValidator.isValid("http://goo../test4..=?"));
+    assertFalse(urlValidator.isValid("ftp://goo./test5:..?:."));
+
+    System.out.println("(If we see no failures here then we're good to go)");
+    System.out.println("");
   }
 
-  public void testYourSecondPartition(){
-  // second partition testing
+  public void testYourSecondPartition() {
+    // second partition testing (invalid)
+    // UrlValidator urlValidator = new UrlValidator(null,null,1 << 1 + 1 << 2);
+    // System.out.println("");
+    // System.out.println("=====Second Domain Partion (valid)=====");
+    // System.out.println("");
   }
-  //You can create more test cases for your Partitions if you need to
+
+  // public static String RandomSelectScheme(Random random) {
+  //   String[] schemes = new String[] {"http","https","ftp"};
+	// 	int n = random.nextInt(schemes.length);
+	// 	return schemes[n];
+  // }
+  // public static String RandomSelectConstructor(Random random) {
+  //   /*
+  //     Options:
+  //     0 : UrlValidator()
+  //     1 : UrlValidator(String[] schemes)
+  //     2 : UrlValidator(long options)
+  //     3 : UrlValidator(String[] schemes, long options)
+  //     4 : UrlValidator(RegexValidator authorityValidator, long options)
+  //     5 : UrlValidator(String[] schemes, RegexValidator authorityValidator, long options)
+  //   */
+  //   int[] constructors = new int[] {0,1,2,3,4,5};
+	// 	int n = random.nextInt(schemes.length);
+	// 	return schemes[n];
+  // }
+
   public void testIsValid() {
 	// programming based testing
+    int i;
+    int index;
+    for (i=0;i<100;i++) {
+      //nothing yet
+    }
   }
 }
