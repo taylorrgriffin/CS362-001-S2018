@@ -3,6 +3,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import java.util.Random;
 import static org.junit.Assert.*;
+import java.util.concurrent.TimeUnit;
 
 public class UrlValidatorTest extends TestCase {
 
@@ -171,34 +172,91 @@ public class UrlValidatorTest extends TestCase {
 		return schemes[n];
   }
 
-  public static String RandomSelectConstructor(Random random) {
+  public static int RandomSelectConstructor(Random random) {
     /*
       Options:
       0 : UrlValidator()
       1 : UrlValidator(String[] schemes)
       2 : UrlValidator(long options)
-      3 : UrlValidator(String[] schemes, long options)
-      4 : UrlValidator(RegexValidator authorityValidator, long options)
-      5 : UrlValidator(String[] schemes, RegexValidator authorityValidator, long options)
+      3 : UrlValidator(String[] schemes, RegexValidator authorityValidator, long options)
+
+      x : UrlValidator(String[] schemes, long options)
+      x : UrlValidator(RegexValidator authorityValidator, long options)
+
     */
-    int[] constructors = new int[] {0,1,2,3,4,5};
-		int n = random.nextInt(schemes.length);
-		return schemes[n];
+    int[] constructors = new int[] {0,1,2,3};
+		int n = random.nextInt(constructors.length);
+		return constructors[n];
+  }
+
+  public static int RandomSelectParts(Random random) {
+    int[] parts = new int[] {0,1,2,3,4,5};
+    int n = random.nextInt(parts.length);
+    return parts[n];
+  }
+
+  public static String RandomSelectExtension(Random random) {
+    String[] exts = new String[] {"com","net","edu","html"};
+    int n = random.nextInt(exts.length);
+    return exts[n];
+  }
+
+  public static String AssembleUrl(String scheme, String ext, int parts) {
+    String path = "";
+    if (parts == 0) {
+      path = scheme + ":";
+    }
+    else if (parts == 1) {
+      path = scheme + ":" + "//";
+    }
+    else if (parts == 2) {
+      path = scheme + ":" + "//" + "domain";
+    }
+    else if (parts == 3) {
+      path = scheme + ":" + "//" + "domain" + "." + ext;
+    }
+    else if (parts == 4) {
+      path = scheme + ":" + "//" + "domain" + "." + ext + "/extension";
+    }
+    return path;
   }
 
   public void testIsValid() {
-	// programming based testing
-  System.out.println("");
-  System.out.println("=====Programming-based Testing=====");
-  System.out.println("");
+	   // programming based testing
+    System.out.println("");
+    System.out.println("=====Programming-based Testing=====");
+    System.out.println("");
     int i;
-    int index;
+    String ext;
     int cons;
-    UrlVaidator[] urlValidators;
-    for (i=0;i<50;i++) {
-      cons = RandomSelectConstructor();
-      UrlValidator urlValidator = new UrlValidator(null,null,1 << 1 + 1 << 2);
-      UrlVaidators[i] = new urlValidator
+    int parts;
+    String scheme;
+    String url;
+    UrlValidator[] urlValidators = new UrlValidator[100];
+    for (i=0;i<100;i++) {
+      System.out.print("Test " + i + "\t");
+      Random random = new Random(System.currentTimeMillis());
+      scheme = RandomSelectScheme(random);
+      cons = RandomSelectConstructor(random);
+      ext = RandomSelectExtension(random);
+      parts = RandomSelectParts(random);
+      url = AssembleUrl(scheme, ext, parts);
+      if (cons == 0) {
+        urlValidators[i] = new UrlValidator();
+      }
+      else if (cons == 1) {
+        urlValidators[i] = new UrlValidator(null);
+      }
+      else if (cons == 2) {
+        urlValidators[i] = new UrlValidator(1 << 1 + 1 << 2);
+      }
+      else if (cons == 3) {
+        urlValidators[i] = new UrlValidator(null,null,1 << 1 + 1 << 2);
+      }
+      System.out.print(" valid: " + urlValidators[i].isValid(url));
+      System.out.print(" cons: " + cons + ",");
+      System.out.print(" scheme: " + scheme + ",\t");
+      System.out.println(" url: " + url);
     }
     System.out.println("");
     System.out.println("=====Done Testing=====");
